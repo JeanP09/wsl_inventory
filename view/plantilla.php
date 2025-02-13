@@ -6,6 +6,7 @@ session_start();
 
 <!DOCTYPE html>
 <html>
+
 <head>
 
   <meta charset="utf-8">
@@ -18,7 +19,7 @@ session_start();
 
   <link rel="icon" href="view/img/plantilla/inventario.png">
 
-   <!--=====================================
+  <!--=====================================
   PLUGINS DE CSS
   ======================================-->
 
@@ -33,12 +34,16 @@ session_start();
 
   <!-- Theme style -->
   <link rel="stylesheet" href="view/dist/css/AdminLTE.css">
-  
+
   <!-- AdminLTE Skins -->
   <link rel="stylesheet" href="view/dist/css/skins/_all-skins.min.css">
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!--DataTables -->
+  <link rel="stylesheet" href="view/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="view/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
 
   <!--=====================================
   PLUGINS DE JAVASCRIPT
@@ -46,15 +51,21 @@ session_start();
 
   <!-- jQuery 3 -->
   <script src="view/bower_components/jquery/dist/jquery.min.js"></script>
-  
+
   <!-- Bootstrap 3.3.7 -->
   <script src="view/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
   <!-- FastClick -->
   <script src="view/bower_components/fastclick/lib/fastclick.js"></script>
-  
+
   <!-- AdminLTE App -->
   <script src="view/dist/js/adminlte.min.js"></script>
+
+  <!-- DataTables --> 
+  <script src="view/bower_components/datatables.net/js/jquery.dataTables.min.js"></script> 
+  <script src="view/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script src="view/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+  <script src="view/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
 
 </head>
 
@@ -63,12 +74,12 @@ CUERPO DOCUMENTO
 ======================================-->
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini login-page">
- 
+
   <?php
 
-  if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok"){
+  if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok") {
 
-   echo '<div class="wrapper">';
+    echo '<div class="wrapper">';
 
     /*=============================================
     CABEZOTE
@@ -86,30 +97,28 @@ CUERPO DOCUMENTO
     CONTENIDO
     =============================================*/
 
-    if(isset($_GET["ruta"])){
+    if (isset($_GET["ruta"])) {
 
-      if($_GET["ruta"] == "inicio" ||
-         $_GET["ruta"] == "usuarios" ||
-         $_GET["ruta"] == "categorias" ||
-         $_GET["ruta"] == "productos" ||
-         $_GET["ruta"] == "clientes" ||
-         $_GET["ruta"] == "ventas" ||
-         $_GET["ruta"] == "crear-venta" ||
-         $_GET["ruta"] == "reportes" ||
-         $_GET["ruta"] == "salir"){
+      if (
+        $_GET["ruta"] == "inicio" ||
+        $_GET["ruta"] == "usuarios" ||
+        $_GET["ruta"] == "categorias" ||
+        $_GET["ruta"] == "productos" ||
+        $_GET["ruta"] == "clientes" ||
+        $_GET["ruta"] == "ventas" ||
+        $_GET["ruta"] == "crear-venta" ||
+        $_GET["ruta"] == "reportes" ||
+        $_GET["ruta"] == "salir"
+      ) {
 
-        include "modulos/".$_GET["ruta"].".php";
-
-      }else{
+        include "modulos/" . $_GET["ruta"] . ".php";
+      } else {
 
         include "modulos/404.php";
-
       }
-
-    }else{
+    } else {
 
       include "modulos/inicio.php";
-
     }
 
     /*=============================================
@@ -119,15 +128,14 @@ CUERPO DOCUMENTO
     include "modulos/footer.php";
 
     echo '</div>';
-
-  }else{
+  } else {
 
     include "modulos/login.php";
-
   }
   ?>
 
 
-<script src="view/js/plantilla.js"></script>
+  <script src="view/js/plantilla.js"></script>
 </body>
+
 </html>
