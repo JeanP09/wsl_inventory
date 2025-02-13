@@ -16,7 +16,7 @@ session_start();
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <link rel="icon" href="view/img/plantilla/icono-negro.png">
+  <link rel="icon" href="view/img/plantilla/inventario.png">
 
    <!--=====================================
   PLUGINS DE CSS
@@ -66,7 +66,7 @@ CUERPO DOCUMENTO
  
   <?php
 
-  /*if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok"){*/
+  if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok"){
 
    echo '<div class="wrapper">';
 
@@ -120,11 +120,11 @@ CUERPO DOCUMENTO
 
     echo '</div>';
 
- /* }else{
+  }else{
 
     include "modulos/login.php";
 
-  }*/
+  }
   ?>
 
 
