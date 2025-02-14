@@ -207,11 +207,11 @@ MODAL AGREGAR USUARIO
 
               <div class="panel text-uppercase">Subir Foto</div>
 
-              <input type="file" id="nuevaFoto" name="nuevaFoto">
+              <input type="file" class="nuevaFoto" name="nuevaFoto">
 
-              <p class="help-block">Peso máximo de la foto 200MB</p>
+              <p class="help-block">Peso máximo de la foto 2MB</p>
 
-              <img src="view\img\usuarios\default\anonymous.avif" class="img-thumbnail" width="100px">
+              <img src="view\img\usuarios\default\anonymous.avif" class="img-thumbnail previsualizar" width="100px">
 
             </div>
 
