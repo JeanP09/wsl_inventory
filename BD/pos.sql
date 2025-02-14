@@ -16,8 +16,9 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `usuarios` (`nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`)  
-VALUES ('Harold', 'HHH', 'Master01*', 'administrador', '', '1', NULL, NULL);
+INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`) VALUES
+(3, 'usuario Administrador', 'admin', 'admin123', 'Administrador', '', 1, '0000-00-00 00:00:00', '2025-02-13 16:35:27');
+
 
 
 SELECT * FROM usuarios;

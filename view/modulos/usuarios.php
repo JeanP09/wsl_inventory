@@ -39,7 +39,7 @@
 
             <tr>
 
-              <th>#</th>
+              <th style="width:10px">#</th>
               <th>Nombre</th>
               <th>Usuario</th>
               <th>Foto</th>
@@ -234,6 +234,13 @@ MODAL AGREGAR USUARIO
           <button type="submit" class="btn btn-primary">Guardar usuario</button>
 
         </div>
+
+        <?php
+
+          $crearUsuario = new ControladorUsuarios();
+          $crearUsuario -> ctrCrearUsuario();
+
+        ?>
 
       </form>
 
