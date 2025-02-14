@@ -1,5 +1,3 @@
-#Rutas amigables
-
 Options All -Indexes
 
 RewriteEngine On
