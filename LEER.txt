@@ -2,3 +2,20 @@ Ingreso al sistema:
 
 User: admin
 Password: admin123
+
+
+
+Funcionoes usuarios
+
+Administrador
++Todas las opciones de menu
+    +Todas las Funcionoes
+
+Especial
++Solo tiene acceso a categorias y  productos
+    +solo puede editar productos y categorias
+
+Vendedor
++Solo tinee acceso a clientes y Ventas 
+    +Solo puede editar clientes, generar ventas y adminisrar ventas (crear xml y pdf)
+

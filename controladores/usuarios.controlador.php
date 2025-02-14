@@ -98,7 +98,7 @@ class ControladorUsuarios{
 
 				$ruta = "";
 
-				if(isset($_FILES["nuevaFoto"]["tmp_name"])){
+				if(isset($_FILES["nuevaFoto"]["tmp_name"]) && !empty($_FILES["nuevaFoto"]["tmp_name"])) { // Validación agregada
 
 					list($ancho, $alto) = getimagesize($_FILES["nuevaFoto"]["tmp_name"]);
 
