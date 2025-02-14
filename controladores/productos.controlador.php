@@ -33,9 +33,9 @@ class ControladorProductos{
 				VALIDAR IMAGEN
 				=============================================*/
 
-			   	$ruta = "vistas/img/productos/default/anonymous.png";
+			   	$ruta = "vistas/img/productos/default/anonymous.png"; // Imagen predeterminada
 
-			   	if(isset($_FILES["nuevaImagen"]["tmp_name"])){
+			   	if(isset($_FILES["nuevaImagen"]["tmp_name"]) && !empty($_FILES["nuevaImagen"]["tmp_name"])){
 
 					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
 
@@ -43,7 +43,7 @@ class ControladorProductos{
 					$nuevoAlto = 500;
 
 					/*=============================================
-					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
+					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL PRODUCTO
 					=============================================*/
 
 					$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
