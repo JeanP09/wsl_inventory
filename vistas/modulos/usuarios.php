@@ -432,6 +432,6 @@ MODAL EDITAR USUARIO
   $borrarUsuario = new ControladorUsuarios();
   $borrarUsuario -> ctrBorrarUsuario();
 
-?> 
+?>
 
 
