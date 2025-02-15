@@ -25,17 +25,17 @@ class ControladorVentas{
 	CREAR VENTA
 	=============================================*/
 
-	static public function ctrCrearVenta(){
+	static public function ctrCrearVenta() {
 
-		if(isset($_POST["nuevaVenta"])){
+		if (isset($_POST["nuevaVenta"])) {
 
 			/*=============================================
 			ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
 			=============================================*/
 
-			if($_POST["listaProductos"] == ""){
+			if ($_POST["listaProductos"] == "") {
 
-					echo'<script>
+				echo '<script>
 
 				swal({
 					  type: "error",
@@ -55,27 +55,26 @@ class ControladorVentas{
 				return;
 			}
 
-
 			$listaProductos = json_decode($_POST["listaProductos"], true);
 
 			$totalProductosComprados = array();
 
 			foreach ($listaProductos as $key => $value) {
 
-			   array_push($totalProductosComprados, $value["cantidad"]);
-				
-			   $tablaProductos = "productos";
+				array_push($totalProductosComprados, $value["cantidad"]);
 
-			    $item = "id";
-			    $valor = $value["id"];
-			    $orden = "id";
+				$tablaProductos = "productos";
 
-			    $traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor, $orden);
+				$item = "id";
+				$valor = $value["id"];
+				$orden = "id";
+
+				$traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor, $orden);
 
 				$item1a = "ventas";
 				$valor1a = $value["cantidad"] + $traerProducto["ventas"];
 
-			    $nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
+				$nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
 
 				$item1b = "stock";
 				$valor1b = $value["stock"];
@@ -92,7 +91,7 @@ class ControladorVentas{
 			$traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $item, $valor);
 
 			$item1a = "compras";
-				
+
 			$valor1a = array_sum($totalProductosComprados) + $traerCliente["compras"];
 
 			$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valor);
@@ -103,69 +102,64 @@ class ControladorVentas{
 
 			$fecha = date('Y-m-d');
 			$hora = date('H:i:s');
-			$valor1b = $fecha.' '.$hora;
+			$valor1b = $fecha . ' ' . $hora;
 
 			$fechaCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1b, $valor1b, $valor);
 
 			/*=============================================
-			GUARDAR LA COMPRA
-			=============================================*/	
+			Generar un código de factura único
+			=============================================*/
 
 			$tabla = "ventas";
+			$ultimoCodigo = ModeloVentas::mdlObtenerUltimoCodigo($tabla);
+			$nuevoCodigo = $ultimoCodigo + 1;
 
-			$datos = array("id_vendedor"=>$_POST["idVendedor"],
-						   "id_cliente"=>$_POST["seleccionarCliente"],
-						   "codigo"=>$_POST["nuevaVenta"],
-						   "productos"=>$_POST["listaProductos"],
-						   "impuesto"=>$_POST["nuevoPrecioImpuesto"],
-						   "neto"=>$_POST["nuevoPrecioNeto"],
-						   "total"=>$_POST["totalVenta"],
-						   "metodo_pago"=>$_POST["listaMetodoPago"]);
+			/*=============================================
+			GUARDAR LA COMPRA
+			=============================================*/
+
+			$datos = array(
+				"id_vendedor" => $_POST["idVendedor"],
+				"id_cliente" => $_POST["seleccionarCliente"],
+				"codigo" => $nuevoCodigo,
+				"productos" => $_POST["listaProductos"],
+				"impuesto" => $_POST["nuevoPrecioImpuesto"],
+				"neto" => $_POST["nuevoPrecioNeto"],
+				"total" => $_POST["totalVenta"],
+				"metodo_pago" => $_POST["listaMetodoPago"]
+			);
 
 			$respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 
-			if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-				if(isset($_POST["impresion"])){
-				
-
-					// $impresora = "epson20";
-
-					// $conector = new WindowsPrintConnector($impresora);
-
-					// $imprimir = new Printer($conector);
-
-					// $imprimir -> text("Hola Mundo"."\n");
-
-					// $imprimir -> cut();
-
-					// $imprimir -> close();
+				if (isset($_POST["impresion"])) {
 
 					$impresora = "epson20";
 
 					$conector = new WindowsPrintConnector($impresora);
-					
+
 					$printer = new Printer($conector);
 
-					$printer -> setJustification(Printer::JUSTIFY_CENTER);
+					$printer->setJustification(Printer::JUSTIFY_CENTER);
 
-					$printer -> text(date("Y-m-d H:i:s")."\n");//Fecha de la factura
+					$printer->text(date("Y-m-d H:i:s") . "\n"); //Fecha de la factura
 
-					$printer -> feed(1); //Alimentamos el papel 1 vez*/
+					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
-					$printer -> text("Inventory System"."\n");//Nombre de la empresa
+					$printer->text("Inventory System" . "\n"); //Nombre de la empresa
 
-					$printer -> text("NIT: 71.759.963-9"."\n");//Nit de la empresa
+					$printer->text("NIT: 71.759.963-9" . "\n"); //Nit de la empresa
 
-					$printer -> text("Dirección: Calle 44B 92-11"."\n");//Dirección de la empresa
+					$printer->text("Dirección: Calle 44B 92-11" . "\n"); //Dirección de la empresa
 
-					$printer -> text("Teléfono: 300 786 52 49"."\n");//Teléfono de la empresa
+					$printer->text("Teléfono: 300 786 52 49" . "\n"); //Teléfono de la empresa
 
-					$printer -> text("FACTURA N.".$_POST["nuevaVenta"]."\n");//Número de factura
+					$printer->text("FACTURA N." . $nuevoCodigo . "\n"); //Número de factura
 
-					$printer -> feed(1); //Alimentamos el papel 1 vez*/
+					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
-					$printer -> text("Cliente: ".$traerCliente["nombre"]."\n");//Nombre del cliente
+					$printer->text("Cliente: " . $traerCliente["nombre"] . "\n"); //Nombre del cliente
 
 					$tablaVendedor = "usuarios";
 					$item = "id";
@@ -173,47 +167,47 @@ class ControladorVentas{
 
 					$traerVendedor = ModeloUsuarios::mdlMostrarUsuarios($tablaVendedor, $item, $valor);
 
-					$printer -> text("Vendedor: ".$traerVendedor["nombre"]."\n");//Nombre del vendedor
+					$printer->text("Vendedor: " . $traerVendedor["nombre"] . "\n"); //Nombre del vendedor
 
-					$printer -> feed(1); //Alimentamos el papel 1 vez*/
+					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
 					foreach ($listaProductos as $key => $value) {
 
 						$printer->setJustification(Printer::JUSTIFY_LEFT);
 
-						$printer->text($value["descripcion"]."\n");//Nombre del producto
+						$printer->text($value["descripcion"] . "\n"); //Nombre del producto
 
 						$printer->setJustification(Printer::JUSTIFY_RIGHT);
 
-						$printer->text("$ ".number_format($value["precio"],2)." Und x ".$value["cantidad"]." = $ ".number_format($value["total"],2)."\n");
+						$printer->text("$ " . number_format($value["precio"], 2) . " Und x " . $value["cantidad"] . " = $ " . number_format($value["total"], 2) . "\n");
 
 					}
 
-					$printer -> feed(1); //Alimentamos el papel 1 vez*/			
-					
-					$printer->text("NETO: $ ".number_format($_POST["nuevoPrecioNeto"],2)."\n"); //ahora va el neto
+					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
-					$printer->text("IMPUESTO: $ ".number_format($_POST["nuevoPrecioImpuesto"],2)."\n"); //ahora va el impuesto
+					$printer->text("NETO: $ " . number_format($_POST["nuevoPrecioNeto"], 2) . "\n"); //ahora va el neto
+
+					$printer->text("IMPUESTO: $ " . number_format($_POST["nuevoPrecioImpuesto"], 2) . "\n"); //ahora va el impuesto
 
 					$printer->text("--------\n");
 
-					$printer->text("TOTAL: $ ".number_format($_POST["totalVenta"],2)."\n"); //ahora va el total
+					$printer->text("TOTAL: $ " . number_format($_POST["totalVenta"], 2) . "\n"); //ahora va el total
 
-					$printer -> feed(1); //Alimentamos el papel 1 vez*/	
+					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
 					$printer->text("Muchas gracias por su compra"); //Podemos poner también un pie de página
 
-					$printer -> feed(3); //Alimentamos el papel 3 veces*/
+					$printer->feed(3); //Alimentamos el papel 3 veces*/
 
-					$printer -> cut(); //Cortamos el papel, si la impresora tiene la opción
+					$printer->cut(); //Cortamos el papel, si la impresora tiene la opción
 
-					$printer -> pulse(); //Por medio de la impresora mandamos un pulso, es útil cuando hay cajón moneder
+					$printer->pulse(); //Por medio de la impresora mandamos un pulso, es útil cuando hay cajón moneder
 
-					$printer -> close();
+					$printer->close();
 
 				}
 
-				echo'<script>
+				echo '<script>
 
 				localStorage.removeItem("rango");
 

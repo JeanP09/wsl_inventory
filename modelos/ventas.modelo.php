@@ -196,5 +196,22 @@ class ModeloVentas{
 
 	}
 
+	/*=============================================
+	OBTENER ÚLTIMO CÓDIGO DE FACTURA
+	=============================================*/
+
+	static public function mdlObtenerUltimoCodigo($tabla) {
+
+		$stmt = Conexion::conectar()->prepare("SELECT MAX(codigo) as ultimo_codigo FROM $tabla");
+
+		$stmt->execute();
+
+		return $stmt->fetch()["ultimo_codigo"];
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	
 }

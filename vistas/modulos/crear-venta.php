@@ -84,29 +84,18 @@ if($_SESSION["perfil"] == "Especial"){
 
                     <?php
 
-                    $item = null;
-                    $valor = null;
+                    $ultimoCodigo = ModeloVentas::mdlObtenerUltimoCodigo("ventas");
 
-                    $ventas = ControladorVentas::ctrMostrarVentas($item, $valor);
-
-                    if(!$ventas){
+                    if(!$ultimoCodigo){
 
                       echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="10001" readonly>';
                   
 
                     }else{
 
-                      foreach ($ventas as $key => $value) {
-                        
-                        
-                      
-                      }
+                      $nuevoCodigo = $ultimoCodigo + 1;
 
-                      $codigo = $value["codigo"] + 1;
-
-
-
-                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="'.$codigo.'" readonly>';
+                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="'.$nuevoCodigo.'" readonly>';
                   
 
                     }
