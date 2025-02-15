@@ -267,10 +267,6 @@ if($_SESSION["perfil"] == "Especial"){
 
             <div class="pull-right">
 
-              <div class="checkbox">
-                <label><input type="checkbox" value="1" checked name="impresion">Imprimir Ticket</label>
-              </div>
-
               <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
 
             </div>
