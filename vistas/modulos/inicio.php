@@ -110,11 +110,11 @@
 
 <style>
   .inner {
-    overflow-x: auto; /* Agrega una barra de desplazamiento horizontal */
-    white-space: nowrap; /* Evita que el contenido se ajuste automáticamente */
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
   .inner h3 {
-    display: inline-block; /* Asegura que el h3 se comporte como un elemento en línea */
+    display: inline-block;
   }
 </style>
