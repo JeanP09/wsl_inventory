@@ -241,7 +241,7 @@ MODAL AGREGAR USUARIO
               
               <div class="panel">SUBIR FOTO</div>
 
-              <input type="file" class="nuevaFoto" name="nuevaFoto">
+              <input type="file" class="nuevaFoto" name="nuevaFoto" accept="image/jpeg, image/png">
 
               <p class="help-block">Peso máximo de la foto 2MB</p>
 
@@ -386,7 +386,7 @@ MODAL EDITAR USUARIO
               
               <div class="panel">SUBIR FOTO</div>
 
-              <input type="file" class="nuevaFoto" name="editarFoto">
+              <input type="file" class="nuevaFoto" name="editarFoto" accept="image/jpeg, image/png">
 
               <p class="help-block">Peso máximo de la foto 2MB</p>
 
