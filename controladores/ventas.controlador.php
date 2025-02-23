@@ -568,10 +568,12 @@ class ControladorVentas{
 			$productos = json_decode($venta["productos"], true);
 			foreach ($productos as $producto) {
 				$productoInfo = ModeloProductos::mdlMostrarProductos("productos", "id", $producto["id"], "id");
-				$precioVenta = floatval($producto["precio"]);
-				$precioCompra = floatval($productoInfo["precio_compra"]);
-				$cantidad = intval($producto["cantidad"]);
-				$gananciaTotal += ($precioVenta - $precioCompra) * $cantidad;
+				if ($productoInfo) {
+					$precioVenta = floatval($producto["precio"]);
+					$precioCompra = floatval($productoInfo["precio_compra"]);
+					$cantidad = intval($producto["cantidad"]);
+					$gananciaTotal += ($precioVenta - $precioCompra) * $cantidad;
+				}
 			}
 		}
 
