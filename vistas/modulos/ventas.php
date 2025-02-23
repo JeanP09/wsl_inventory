@@ -125,68 +125,51 @@ if($xml){
 
           $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
 
-          foreach ($respuesta as $key => $value) {
-           
-           echo '<tr>
+          foreach ($respuesta["ventas"] as $key => $value) {
+            echo '<tr>
+                    <td>'.($key + 1).'</td>
+                    <td>'.$value["codigo"].'</td>';
 
-                  <td>'.($key+1).'</td>
+            $itemCliente = "id";
+            $valorCliente = $value["id_cliente"];
+            $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                  <td>'.$value["codigo"].'</td>';
+            if ($respuestaCliente) {
+              echo '<td>'.$respuestaCliente["nombre"].'</td>';
+            } else {
+              echo '<td>Cliente no encontrado</td>';
+            }
 
-                  $itemCliente = "id";
-                  $valorCliente = $value["id_cliente"];
-                  $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+            $itemUsuario = "id";
+            $valorUsuario = $value["id_vendedor"];
+            $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
 
-                  if ($respuestaCliente) {
-                    echo '<td>'.$respuestaCliente["nombre"].'</td>';
-                  } else {
-                    echo '<td>Cliente no encontrado</td>';
-                  }
+            if ($respuestaUsuario) {
+              echo '<td>'.$respuestaUsuario["nombre"].'</td>';
+            } else {
+              echo '<td>Vendedor no encontrado</td>';
+            }
 
-                  $itemUsuario = "id";
-                  $valorUsuario = $value["id_vendedor"];
-                  $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
-
-                  if ($respuestaUsuario) {
-                    echo '<td>'.$respuestaUsuario["nombre"].'</td>';
-                  } else {
-                    echo '<td>Vendedor no encontrado</td>';
-                  }
-
-                  echo '<td>'.$value["metodo_pago"].'</td>
-
-                  <td>$ '.number_format($value["neto"],2).'</td>
-
-                  <td>$ '.number_format($value["total"],2).'</td>
-
+            echo '<td>'.$value["metodo_pago"].'</td>
+                  <td>$ '.number_format($value["neto"], 2).'</td>
+                  <td>$ '.number_format($value["total"], 2).'</td>
                   <td>'.$value["fecha"].'</td>
-
                   <td>
-
                     <div class="btn-group">
-
                       <a class="btn btn-success" href="index.php?ruta=ventas&xml='.$value["codigo"].'">xml</a>
-                        
                       <button class="btn btn-info btnImprimirFactura" codigoVenta="'.$value["codigo"].'">
-
                         <i class="fa fa-print"></i>
-
                       </button>';
 
-                      if($_SESSION["perfil"] == "Administrador"){
-
-                      echo '<button class="btn btn-warning btnEditarVenta" idVenta="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-
-                      <button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>';
-
-                    }
-
-                    echo '</div>  
-
-                  </td>
-
-                </tr>';
+            if ($_SESSION["perfil"] == "Administrador") {
+              echo '<button class="btn btn-warning btnEditarVenta" idVenta="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>';
             }
+
+            echo '</div>
+                  </td>
+                </tr>';
+          }
 
         ?>
                

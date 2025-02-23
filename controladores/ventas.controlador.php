@@ -562,7 +562,20 @@ class ControladorVentas{
 
 		$respuesta = ModeloVentas::mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal);
 
-		return $respuesta;
+		$gananciaTotal = 0;
+
+		foreach ($respuesta as $key => $venta) {
+			$productos = json_decode($venta["productos"], true);
+			foreach ($productos as $producto) {
+				$productoInfo = ModeloProductos::mdlMostrarProductos("productos", "id", $producto["id"], "id");
+				$precioVenta = floatval($producto["precio"]);
+				$precioCompra = floatval($productoInfo["precio_compra"]);
+				$cantidad = intval($producto["cantidad"]);
+				$gananciaTotal += ($precioVenta - $precioCompra) * $cantidad;
+			}
+		}
+
+		return ["ventas" => $respuesta, "gananciaTotal" => $gananciaTotal];
 		
 	}
 

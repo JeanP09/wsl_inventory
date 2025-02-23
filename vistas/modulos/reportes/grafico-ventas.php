@@ -15,12 +15,14 @@ $fechaFinal = null;
 }
 
 $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
+$ventas = $respuesta["ventas"];
+$gananciaTotal = floatval($respuesta["gananciaTotal"]);
 
 $arrayFechas = array();
 $arrayVentas = array();
 $sumaPagosMes = array();
 
-foreach ($respuesta as $key => $value) {
+foreach ($ventas as $key => $value) {
 
 	#Capturamos sólo el año y el mes
 	$fecha = substr($value["fecha"],0,7);
@@ -29,13 +31,10 @@ foreach ($respuesta as $key => $value) {
 	array_push($arrayFechas, $fecha);
 
 	#Capturamos las ventas
-	$arrayVentas = array($fecha => $value["total"]);
-
-	#Sumamos los pagos que ocurrieron el mismo mes
-	foreach ($arrayVentas as $key => $value) {
-		
-		$sumaPagosMes[$key] += $value;
+	if (!isset($sumaPagosMes[$fecha])) {
+		$sumaPagosMes[$fecha] = 0;
 	}
+	$sumaPagosMes[$fecha] += $value["total"];
 
 }
 
@@ -67,6 +66,24 @@ GRÁFICO DE VENTAS
   </div>
 
 </div>
+
+<?php if ($_SESSION["perfil"] == "Administrador"): ?>
+<div class="box box-solid bg-green-gradient">
+	
+	<div class="box-header">
+		
+ 		<i class="fa fa-th"></i>
+
+  		<h3 class="box-title">Ganancia Total</h3>
+
+	</div>
+
+	<div class="box-body border-radius-none">
+		<p><?php echo "Ganancia Total: $" . number_format($gananciaTotal, 2); ?></p>
+	</div>
+
+</div>
+<?php endif; ?>
 
 <script>
 	
