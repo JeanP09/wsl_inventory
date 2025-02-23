@@ -69,6 +69,36 @@ if ($_SESSION["perfil"] == "Vendedor") {
 
           </thead>
 
+          <tbody>
+            <?php
+              $item = null;
+              $valor = null;
+              $orden = "id";
+
+              $productos = ControladorProductos::ctrMostrarProductos($item, $valor, $orden);
+
+              foreach ($productos as $key => $value) {
+                echo '<tr>
+                        <td>'.($key+1).'</td>
+                        <td><img src="'.$value["imagen"].'" class="img-thumbnail" width="40px"></td>
+                        <td>'.$value["codigo"].'</td>
+                        <td>'.$value["descripcion"].'</td>
+                        <td>'.$value["categoria"].'</td>
+                        <td>'.$value["stock"].'</td>
+                        <td>'.$value["precio_compra"].'</td>
+                        <td>'.$value["precio_venta"].'</td>
+                        <td>'.$value["fecha"].'</td>
+                        <td>
+                          <div class="btn-group">
+                            <button class="btn btn-warning btnEditarProducto" idProducto="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarProducto"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-danger btnEliminarProducto" idProducto="'.$value["id"].'" codigo="'.$value["codigo"].'" imagen="'.$value["imagen"].'"><i class="fa fa-times"></i></button>
+                          </div>
+                        </td>
+                      </tr>';
+              }
+            ?>
+          </tbody>
+
         </table>
 
         <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
