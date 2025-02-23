@@ -48,7 +48,9 @@ class ControladorProductos{
 
 					$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
 
-					mkdir($directorio, 0755);
+					if (!file_exists($directorio)) {
+						mkdir($directorio, 0755);
+					}
 
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
