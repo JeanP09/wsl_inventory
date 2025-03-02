@@ -382,16 +382,26 @@ class ControladorProductos{
 			$pdf->Cell(60, 10, 'Descripcion');
 			$pdf->Cell(40, 10, 'Categoria');
 			$pdf->Cell(20, 10, 'Stock');
-			$pdf->Cell(30, 10, 'Precio Venta');
 			$pdf->Ln();
 
 			// Datos
 			foreach ($productos as $producto) {
+				$categoria = "";
+				switch ($producto["id_categoria"]) {
+					case 1:
+						$categoria = "Local";
+						break;
+					case 2:
+						$categoria = "Bodega 1";
+						break;
+					case 3:
+						$categoria = "Bodega 2";
+						break;
+				}
 				$pdf->Cell(40, 10, $producto["codigo"]);
 				$pdf->Cell(60, 10, $producto["descripcion"]);
-				$pdf->Cell(40, 10, $producto["id_categoria"]);
+				$pdf->Cell(40, 10, $categoria);
 				$pdf->Cell(20, 10, $producto["stock"]);
-				$pdf->Cell(30, 10, $producto["precio_venta"]);
 				$pdf->Ln();
 			}
 
@@ -401,10 +411,22 @@ class ControladorProductos{
 			header("Content-Type: application/vnd.ms-excel");
 			header("Content-Disposition: attachment; filename=reporte_productos.xls");
 
-			echo "Codigo\tDescripcion\tCategoria\tStock\tPrecio Venta\n";
+			echo "Codigo\tDescripcion\tCategoria\tStock\n";
 
 			foreach ($productos as $producto) {
-				echo $producto["codigo"] . "\t" . $producto["descripcion"] . "\t" . $producto["id_categoria"] . "\t" . $producto["stock"] . "\t" . $producto["precio_venta"] . "\n";
+				$categoria = "";
+				switch ($producto["id_categoria"]) {
+					case 1:
+						$categoria = "Local";
+						break;
+					case 2:
+						$categoria = "Bodega 1";
+						break;
+					case 3:
+						$categoria = "Bodega 2";
+						break;
+				}
+				echo $producto["codigo"] . "\t" . $producto["descripcion"] . "\t" . $categoria . "\t" . $producto["stock"] . "\n";
 			}
 		}
 	}
