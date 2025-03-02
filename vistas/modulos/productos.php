@@ -44,6 +44,16 @@ if ($_SESSION["perfil"] == "Vendedor") {
 
         </button>
 
+        <div class="btn-group">
+          <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            Descargar reporte <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="reporte-productos.php?tipo=pdf" target="_blank">PDF</a></li>
+            <li><a href="reporte-productos.php?tipo=excel" target="_blank">Excel</a></li>
+          </ul>
+        </div>
+
       </div>
 
       <div class="box-body">

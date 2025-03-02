@@ -362,5 +362,51 @@ class ControladorProductos{
 
 	}
 
+	/*=============================================
+	DESCARGAR REPORTE
+	=============================================*/
+	static public function ctrDescargarReporte($tipo) {
+		$tabla = "productos";
+		$productos = ModeloProductos::mdlObtenerDatosReporte($tabla);
+
+		if ($tipo == "pdf") {
+			// Lógica para generar reporte en PDF usando TCPDF
+			require_once "extensiones/tcpdf/tcpdf.php";
+
+			$pdf = new TCPDF();
+			$pdf->AddPage();
+			$pdf->SetFont('helvetica', 'B', 12);
+
+			// Encabezado
+			$pdf->Cell(40, 10, 'Codigo');
+			$pdf->Cell(60, 10, 'Descripcion');
+			$pdf->Cell(40, 10, 'Categoria');
+			$pdf->Cell(20, 10, 'Stock');
+			$pdf->Cell(30, 10, 'Precio Venta');
+			$pdf->Ln();
+
+			// Datos
+			foreach ($productos as $producto) {
+				$pdf->Cell(40, 10, $producto["codigo"]);
+				$pdf->Cell(60, 10, $producto["descripcion"]);
+				$pdf->Cell(40, 10, $producto["id_categoria"]);
+				$pdf->Cell(20, 10, $producto["stock"]);
+				$pdf->Cell(30, 10, $producto["precio_venta"]);
+				$pdf->Ln();
+			}
+
+			$pdf->Output('reporte_productos.pdf', 'I');
+		} elseif ($tipo == "excel") {
+			// Lógica para generar reporte en Excel
+			header("Content-Type: application/vnd.ms-excel");
+			header("Content-Disposition: attachment; filename=reporte_productos.xls");
+
+			echo "Codigo\tDescripcion\tCategoria\tStock\tPrecio Venta\n";
+
+			foreach ($productos as $producto) {
+				echo $producto["codigo"] . "\t" . $producto["descripcion"] . "\t" . $producto["id_categoria"] . "\t" . $producto["stock"] . "\t" . $producto["precio_venta"] . "\n";
+			}
+		}
+	}
 
 }

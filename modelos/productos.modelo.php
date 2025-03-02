@@ -171,5 +171,13 @@ class ModeloProductos{
     $stmt = null;
   }
 
+  /*=============================================
+  OBTENER DATOS PARA REPORTE
+  =============================================*/
+  static public function mdlObtenerDatosReporte($tabla) {
+    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
 
 }
