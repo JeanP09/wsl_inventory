@@ -1,0 +1,13 @@
+1. Instalar y mover el rclone.exe en la ruta de ejemplo: "C:\Windows\System32"
+2. Abrir el CMD y ejecutar "rclone config"
+3. Elegir la "n" de "New Remote"
+4. Ingresar el nombre de nuevo remoto "drive_Database"
+5. Presionar (Google Drive) como servicio "20"
+6. Dejar en blanco client_id y client_secret
+7. Presionar "1" (Full access) para darle acceso completo al Drive
+8. Dejar en blanco y darle Enter
+9. Presionar "n" para continuar
+10. Presionar "y" para abrir el navegador, vincular y autorizar con la cuenta de Google Drive
+11. Presionar "n" para indicar que es un Google Drive personal
+12. Presionar "y" para confirmar la operación
+13. Finalmente ya se tiene la conexión

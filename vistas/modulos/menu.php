@@ -54,16 +54,16 @@
 				</span>
                 </a>
                 <ul class="treeview-menu">
+				<li class="' . ($current_page == "crear-venta" ? "active" : "") . '">
+					<a href="crear-venta">
+					<i class="fa fa-circle-o"></i>
+					<span>Crear venta</span>
+					</a>
+				</li>
 				<li class="' . ($current_page == "ventas" ? "active" : "") . '">
                     <a href="ventas">
 					<i class="fa fa-circle-o"></i>
 					<span>Administrar ventas</span>
-                    </a>
-				</li>
-				<li class="' . ($current_page == "crear-venta" ? "active" : "") . '">
-                    <a href="crear-venta">
-					<i class="fa fa-circle-o"></i>
-					<span>Crear venta</span>
                     </a>
 				</li>';
 				if ($_SESSION["perfil"] == "Administrador") {

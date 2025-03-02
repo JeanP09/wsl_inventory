@@ -72,7 +72,7 @@ GRÁFICO DE VENTAS
 	
 	<div class="box-header">
 		
- 		<i class="fa fa-th"></i>
+ 		<i class="fa fa-money"></i>
 
   		<h3 class="box-title">Ganancia Total</h3>
 

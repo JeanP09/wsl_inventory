@@ -147,7 +147,7 @@ class ControladorVentas{
 
 					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
-					$printer->text("Inventory System" . "\n"); //Nombre de la empresa
+					$printer->text("Distribuciones WSL" . "\n"); //Nombre de la empresa
 
 					$printer->text("NIT: 71.759.963-9" . "\n"); //Nit de la empresa
 
@@ -568,12 +568,10 @@ class ControladorVentas{
 			$productos = json_decode($venta["productos"], true);
 			foreach ($productos as $producto) {
 				$productoInfo = ModeloProductos::mdlMostrarProductos("productos", "id", $producto["id"], "id");
-				if ($productoInfo) {
-					$precioVenta = floatval($producto["precio"]);
-					$precioCompra = floatval($productoInfo["precio_compra"]);
-					$cantidad = intval($producto["cantidad"]);
-					$gananciaTotal += ($precioVenta - $precioCompra) * $cantidad;
-				}
+				$precioVenta = floatval($producto["precio"]);
+				$precioCompra = floatval($productoInfo["precio_compra"]);
+				$cantidad = intval($producto["cantidad"]);
+				$gananciaTotal += ($precioVenta - $precioCompra) * $cantidad;
 			}
 		}
 
@@ -665,7 +663,7 @@ class ControladorVentas{
 		 		echo utf8_decode("</td>
 					<td style='border:1px solid #eee;'>$ ".number_format($item["impuesto"],2)."</td>
 					<td style='border:1px solid #eee;'>$ ".number_format($item["neto"],2)."</td>	
-					<td style='border:1px solid #eee;'>$ ".number_format($item["total"], 0, '', '')."</td>
+					<td style='border:1px solid #eee;'>$ ".number_format($item["total"],2)."</td>
 					<td style='border:1px solid #eee;'>".$item["metodo_pago"]."</td>
 					<td style='border:1px solid #eee;'>".substr($item["fecha"],0,10)."</td>		
 		 			</tr>");
