@@ -95,7 +95,7 @@ if($xml){
            
            <th style="width:10px">#</th>
            <th>Código factura</th>
-           <th>Cliente</th>
+           <th>Cliente Descripción</th>
            <th>Vendedor</th>
            <th>Forma de pago</th>
            <th>Neto</th>
@@ -130,14 +130,11 @@ if($xml){
                     <td>'.($key + 1).'</td>
                     <td>'.$value["codigo"].'</td>';
 
-            $itemCliente = "id";
-            $valorCliente = $value["id_cliente"];
-            $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
-
-            if ($respuestaCliente) {
-              echo '<td>'.$respuestaCliente["nombre"].'</td>';
+            // Verificar si cliente_descripcion está definido y no está vacío
+            if (isset($value["clienTe_descripcion"]) && !empty($value["clienTe_descripcion"])) {
+              echo '<td>'.$value["clienTe_descripcion"].'</td>';
             } else {
-              echo '<td>Cliente no encontrado</td>';
+              echo '<td>Vacío</td>';
             }
 
             $itemUsuario = "id";

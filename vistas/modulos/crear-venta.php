@@ -108,7 +108,7 @@ if($_SESSION["perfil"] == "Especial"){
                 </div>
 
                 <!--=====================================
-                ENTRADA DEL CLIENTE
+                ENTRADA DEL CLIENTE DESCRIPCIÓN
                 ======================================--> 
 
                 <div class="form-group">
@@ -117,28 +117,7 @@ if($_SESSION["perfil"] == "Especial"){
                     
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
                     
-                    <select class="form-control" id="seleccionarCliente" name="seleccionarCliente" required>
-
-                    <option value="">Seleccionar cliente</option>
-
-                    <?php
-
-                      $item = null;
-                      $valor = null;
-
-                      $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
-
-                       foreach ($categorias as $key => $value) {
-
-                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-
-                       }
-
-                    ?>
-
-                    </select>
-                    
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAgregarCliente" data-dismiss="modal">Agregar cliente</button></span>
+                    <input type="text" class="form-control" id="clienteDescripcion" name="clienteDescripcion" placeholder="Descripción del cliente (opcional)">
                   
                   </div>
                 

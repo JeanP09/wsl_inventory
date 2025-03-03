@@ -92,29 +92,6 @@ class ControladorVentas{
 
 			}
 
-			$tablaClientes = "clientes";
-
-			$item = "id";
-			$valor = $_POST["seleccionarCliente"];
-
-			$traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $item, $valor);
-
-			$item1a = "compras";
-
-			$valor1a = array_sum($totalProductosComprados) + $traerCliente["compras"];
-
-			$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valor);
-
-			$item1b = "ultima_compra";
-
-			date_default_timezone_set('America/Bogota');
-
-			$fecha = date('Y-m-d');
-			$hora = date('H:i:s');
-			$valor1b = $fecha . ' ' . $hora;
-
-			$fechaCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1b, $valor1b, $valor);
-
 			/*=============================================
 			Generar un código de factura único
 			=============================================*/
@@ -129,12 +106,12 @@ class ControladorVentas{
 
 			$datos = array(
 				"id_vendedor" => $_POST["idVendedor"],
-				"id_cliente" => $_POST["seleccionarCliente"],
 				"codigo" => $nuevoCodigo,
 				"productos" => $_POST["listaProductos"],
 				"neto" => $totalNeto,
 				"total" => $_POST["totalVenta"],
-				"metodo_pago" => $_POST["listaMetodoPago"]
+				"metodo_pago" => $_POST["listaMetodoPago"],
+				"cliente_descripcion" => $_POST["clienteDescripcion"]
 			);
 
 			$respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
@@ -758,7 +735,7 @@ class ControladorVentas{
 			// $objetoXML->endElement(); // Final del nodo raíz
 
 
-			$objetoXML->writeRaw('<fe:Invoice xmlns:fe="http://www.dian.gov.co/contratos/facturaelectronica/v1" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:clm54217="urn:un:unece:uncefact:codelist:specification:54217:2001" xmlns:clm66411="urn:un:unece:uncefact:codelist:specification:66411:2001" xmlns:clmIANAMIMEMediaType="urn:un:unece:uncefact:codelist:specification:IANAMIMEMediaType:2003" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sts="http://www.dian.gov.co/contratos/facturaelectronica/v1/Structures" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dian.gov.co/contratos/facturaelectronica/v1 ../xsd/DIAN_UBL.xsd urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2 ../../ubl2/common/UnqualifiedDataTypeSchemaModule-2.0.xsd urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2 ../../ubl2/common/UBL-QualifiedDatatypes-2.0.xsd">');
+			$objetoXML->writeRaw('<fe:Invoice xmlns:fe="http://www.dian.gov.co/contratos/facturaelectronica/v1" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:clm54217="urn:un:unece:uncefact:codelist:specification:54217:2001" xmlns:clm66411="urn:un:unece:uncefact:codelist:specification:66411:2001" xmlns:clmIANAMIMEMediaType="urn:un:unece:uncefact:codelist:specification:IANAMIMEMediaType:2003" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sts="http://www.dian.gov.co/contratos/facturaelectronica/v1/Structures" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dian.gov.co/contratos/facturaelectronica/v1 ../xsd/DIAN_UBL.xsd urn:un:unece:uncefact:data:specification:UnqualifiedDataTypeSchemaModule:2 ../../ubl2/common/UnqualifiedDataTypeSchemaModule-2.0.xsd urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2 ../../ubl2/common/UBL-QualifiedDatatypes-2.0.xsd">');
 
 			$objetoXML->writeRaw('<ext:UBLExtensions>');
 
