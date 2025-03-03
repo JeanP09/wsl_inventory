@@ -268,11 +268,16 @@ if($_SESSION["perfil"] == "Especial"){
                   <th>Imagen</th>
                   <th>Código</th>
                   <th>Descripcion</th>
+                  <th>Precio Compra</th>
                   <th>Stock</th>
                   <th>Acciones</th>
                 </tr>
 
               </thead>
+
+              <tbody>
+                <!-- Aquí se llenarán los datos de los productos -->
+              </tbody>
 
             </table>
 

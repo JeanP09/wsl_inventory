@@ -53,108 +53,138 @@ AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
 
 $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
-	var idProducto = $(this).attr("idProducto");
+  var idProducto = $(this).attr("idProducto");
 
-	$(this).removeClass("btn-primary agregarProducto");
+  $(this).removeClass("btn-primary agregarProducto");
 
-	$(this).addClass("btn-default");
+  $(this).addClass("btn-default");
 
-	var datos = new FormData();
-    datos.append("idProducto", idProducto);
+  var datos = new FormData();
+  datos.append("idProducto", idProducto);
 
-     $.ajax({
+  $.ajax({
 
-     	url:"ajax/productos.ajax.php",
-      	method: "POST",
-      	data: datos,
-      	cache: false,
-      	contentType: false,
-      	processData: false,
-      	dataType:"json",
-      	success:function(respuesta){
+    url:"ajax/productos.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
 
-      	    var descripcion = respuesta["descripcion"];
-          	var stock = respuesta["stock"];
-          	var precio = respuesta["precio_venta"];
+      var descripcion = respuesta["descripcion"];
+      var stock = respuesta["stock"];
+      var precio = respuesta["precio_venta"];
+      var precioCompra = respuesta["precio_compra"];
 
-          	/*=============================================
-          	EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
-          	=============================================*/
+      /*=============================================
+      EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
+      =============================================*/
 
-          	if(stock == 0){
+      if(stock == 0){
 
-      			swal({
-			      title: "No hay stock disponible",
-			      type: "error",
-			      confirmButtonText: "¡Cerrar!"
-			    });
+        swal({
+          title: "No hay stock disponible",
+          type: "error",
+          confirmButtonText: "¡Cerrar!"
+        });
 
-			    $("button[idProducto='"+idProducto+"']").addClass("btn-primary agregarProducto");
+        $("button[idProducto='"+idProducto+"']").addClass("btn-primary agregarProducto");
 
-			    return;
+        return;
 
-          	}
+      }
 
-          	$(".nuevoProducto").append(
+      $(".nuevoProducto").append(
 
-          	'<div class="row" style="padding:5px 15px">'+
+      '<div class="row" style="padding:5px 15px">'+
 
-			  '<!-- Descripción del producto -->'+
-	          
-	          '<div class="col-xs-6" style="padding-right:0px">'+
-	          
-	            '<div class="input-group">'+
-	              
-	              '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="'+idProducto+'"><i class="fa fa-times"></i></button></span>'+
+        '<!-- Descripción del producto -->'+
+        
+        '<div class="col-xs-6" style="padding-right:0px">'+
+        
+          '<div class="input-group">'+
+            
+            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="'+idProducto+'"><i class="fa fa-times"></i></button></span>'+
 
-	              '<input type="text" class="form-control nuevaDescripcionProducto" idProducto="'+idProducto+'" name="agregarProducto" value="'+descripcion+'" readonly required>'+
+            '<input type="text" class="form-control nuevaDescripcionProducto" idProducto="'+idProducto+'" name="agregarProducto" value="'+descripcion+'" readonly required>'+
 
-	            '</div>'+
+          '</div>'+
 
-	          '</div>'+
+        '</div>'+
 
-	          '<!-- Cantidad del producto -->'+
+        '<!-- Cantidad del producto -->'+
 
-	          '<div class="col-xs-3">'+
-	            
-	             '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock="'+stock+'" nuevoStock="'+Number(stock-1)+'" required>'+
+        '<div class="col-xs-2">'+
+          
+           '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock="'+stock+'" nuevoStock="'+Number(stock-1)+'" required>'+
 
-	          '</div>' +
+        '</div>' +
 
-	          '<!-- Precio del producto -->'+
+        '<!-- Precio de venta del producto -->'+
 
-	          '<div class="col-xs-3 ingresoPrecio" style="padding-left:0px">'+
+        '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">'+
 
-	            '<div class="input-group">'+
+          '<div class="input-group">'+
 
-	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
-	                 
-	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="'+precio+'" name="nuevoPrecioProducto" value="'+precio+'" readonly required>'+
-	 
-	            '</div>'+
-	             
-	          '</div>'+
+            '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+               
+            '<input type="text" class="form-control nuevoPrecioProducto" precioReal="'+precio+'" name="nuevoPrecioProducto" value="'+precio+'" readonly required>'+
+   
+          '</div>'+
+           
+        '</div>'+
 
-	        '</div>') 
+        '<!-- Precio total del producto -->'+
 
-	        // SUMAR TOTAL DE PRECIOS
+        '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">'+
 
-	        sumarTotalPrecios()
+          '<div class="input-group">'+
 
-	        // AGRUPAR PRODUCTOS EN FORMATO JSON
+            '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+               
+            '<input type="text" class="form-control nuevoPrecioTotalProducto" name="nuevoPrecioTotalProducto" value="'+precio+'" readonly required>'+
+   
+          '</div>'+
+           
+        '</div>'+
 
-	        listarProductos()
+        '<!-- Precio de compra del producto -->'+
 
-	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
+        '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">'+
 
-	        $(".nuevoPrecioProducto").number(true, 2);
+          '<div class="input-group">'+
 
+            '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+               
+            '<input type="text" class="form-control nuevoPrecioCompraProducto" name="nuevoPrecioCompraProducto" value="'+precioCompra+'" readonly required>'+
+   
+          '</div>'+
+           
+        '</div>'+
 
-			localStorage.removeItem("quitarProducto");
+      '</div>') 
 
-      	}
+      // SUMAR TOTAL DE PRECIOS
 
-     })
+      sumarTotalPrecios()
+
+      // AGRUPAR PRODUCTOS EN FORMATO JSON
+
+      listarProductos()
+
+      // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
+
+      $(".nuevoPrecioProducto").number(true, 2);
+      $(".nuevoPrecioTotalProducto").number(true, 2);
+      $(".nuevoPrecioCompraProducto").number(true, 2);
+
+      localStorage.removeItem("quitarProducto");
+
+    }
+
+  })
 
 });
 
@@ -305,13 +335,13 @@ $(".btnAgregarProducto").click(function(){
 
 	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 	                 
-	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
+	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+ 
 	 
-	            '</div>'+
+	            '</div>'+ 
 	             
-	          '</div>'+
+	          '</div>'+ 
 
-	        '</div>');
+	        '</div>'); 
 
 
 	        // AGREGAR LOS PRODUCTOS AL SELECT 
