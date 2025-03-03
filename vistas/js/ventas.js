@@ -141,10 +141,6 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 	        sumarTotalPrecios()
 
-	        // AGREGAR IMPUESTO
-
-	        agregarImpuesto()
-
 	        // AGRUPAR PRODUCTOS EN FORMATO JSON
 
 	        listarProductos()
@@ -409,13 +405,13 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 	var precioFinal = $(this).val() * precio.attr("precioReal");
 	
-	precio.val(precioFinal);
+	precio.val(precioFinal.toFixed(2));
 
 	var nuevoStock = Number($(this).attr("stock")) - $(this).val();
 
 	$(this).attr("nuevoStock", nuevoStock);
 
-	if(Number($(this).val()) > Number($(this).attr("stock"))){
+	if(Number($(this).val()) > Number($(this).attr("stock"))) {
 
 		/*=============================================
 		SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INICIALES
@@ -427,7 +423,7 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 		var precioFinal = $(this).val() * precio.attr("precioReal");
 
-		precio.val(precioFinal);
+		precio.val(precioFinal.toFixed(2));
 
 		sumarTotalPrecios();
 
@@ -446,11 +442,7 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 	sumarTotalPrecios()
 
-	// AGREGAR IMPUESTO
-	        
-    agregarImpuesto()
-
-    // AGRUPAR PRODUCTOS EN FORMATO JSON
+	// AGRUPAR PRODUCTOS EN FORMATO JSON
 
     listarProductos()
 
@@ -463,13 +455,11 @@ SUMAR TODOS LOS PRECIOS
 function sumarTotalPrecios(){
 
 	var precioItem = $(".nuevoPrecioProducto");
-	
 	var arraySumaPrecio = [];  
 
 	for(var i = 0; i < precioItem.length; i++){
 
 		 arraySumaPrecio.push(Number($(precioItem[i]).val()));
-		
 		 
 	}
 
@@ -479,12 +469,11 @@ function sumarTotalPrecios(){
 
 	}
 
-	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
-	
-	$("#nuevoTotalVenta").val(sumaTotalPrecio);
-	$("#totalVenta").val(sumaTotalPrecio);
-	$("#nuevoTotalVenta").attr("total",sumaTotalPrecio);
+	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios, 0);
 
+	$("#nuevoTotalVenta").val(sumaTotalPrecio.toFixed(2));
+	$("#totalVenta").val(sumaTotalPrecio.toFixed(2));
+	$("#nuevoTotalVenta").attr("total", sumaTotalPrecio.toFixed(2));
 
 }
 
@@ -565,6 +554,10 @@ $("#nuevoMetodoPago").change(function(){
 
 			 	'</div>'+
 
+			 '</div>'+
+
+			 '<div class="col-xs-12" id="errorPagoEfectivo" style="display:none">'+
+			 	'<div class="alert alert-danger" role="alert">El efectivo no puede ser menor al total de la venta</div>'+
 			 '</div>'
 
 		 )
@@ -607,17 +600,36 @@ $("#nuevoMetodoPago").change(function(){
 /*=============================================
 CAMBIO EN EFECTIVO
 =============================================*/
-$(".formularioVenta").on("change", "input#nuevoValorEfectivo", function(){
+$(".formularioVenta").on("change", "input#nuevoValorEfectivo", function() {
+  var efectivo = parseFloat($(this).val());
+  var totalVenta = parseFloat($('#nuevoTotalVenta').val());
 
-	var efectivo = $(this).val();
+  if (efectivo < totalVenta) {
+    $("#errorPagoEfectivo").show();
+    $(this).val('');
+    $("#nuevoCambioEfectivo").val('');
+  } else {
+    $("#errorPagoEfectivo").hide();
+    var cambio = efectivo - totalVenta;
+    $("#nuevoCambioEfectivo").val(cambio.toFixed(2));
+  }
+});
 
-	var cambio =  Number(efectivo) - Number($('#nuevoTotalVenta').val());
+$(".formularioVenta").on("submit", function(e) {
+  var metodoPago = $("#nuevoMetodoPago").val();
+  var efectivo = parseFloat($("#nuevoValorEfectivo").val());
+  var totalVenta = parseFloat($("#nuevoTotalVenta").val());
 
-	var nuevoCambioEfectivo = $(this).parent().parent().parent().children('#capturarCambioEfectivo').children().children('#nuevoCambioEfectivo');
-
-	nuevoCambioEfectivo.val(cambio);
-
-})
+  if (metodoPago == "Efectivo" && efectivo < totalVenta) {
+    e.preventDefault();
+    swal({
+      type: "error",
+      title: "El valor del pago en efectivo no puede ser menor al total de la venta",
+      showConfirmButton: true,
+      confirmButtonText: "Cerrar"
+    });
+  }
+});
 
 /*=============================================
 CAMBIO TRANSACCIÓN

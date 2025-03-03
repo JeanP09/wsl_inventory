@@ -167,7 +167,7 @@ if($_SESSION["perfil"] == "Especial"){
                 <div class="row">
 
                   <!--=====================================
-                  ENTRADA IMPUESTOS Y TOTAL
+                  ENTRADA TOTAL
                   ======================================-->
                   
                   <div class="col-xs-8 pull-right">
@@ -177,7 +177,6 @@ if($_SESSION["perfil"] == "Especial"){
                       <thead>
 
                         <tr>
-                          <th>Impuesto</th>
                           <th>Total</th>      
                         </tr>
 
@@ -186,34 +185,13 @@ if($_SESSION["perfil"] == "Especial"){
                       <tbody>
                       
                         <tr>
-                          
-                          <td style="width: 35%">
+                           <td style="width: 100%">
                             
                             <div class="input-group">
-                           
-                              <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" value="0" placeholder="0" required>
-
-                               <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
-
-                               <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
-
-                              <span class="input-group-addon"><i class="fa fa-percent"></i></span>
-                        
-                            </div>
-
-                          </td>
-
-                           <td style="width: 65%">
-                            
-                            <div class="input-group">
-                           
-                              <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
-
+                            <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
                               <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="" placeholder="00000" readonly required style="width: 100%;">
 
                               <input type="hidden" name="totalVenta" id="totalVenta">
-                              
-                        
                             </div>
 
                           </td>
@@ -255,6 +233,10 @@ if($_SESSION["perfil"] == "Especial"){
 
                   <input type="hidden" id="listaMetodoPago" name="listaMetodoPago">
 
+                </div>
+
+                <div id="errorPagoEfectivo" class="alert alert-danger" style="display: none;">
+                  El valor del pago en efectivo no puede ser menor al total de la venta.
                 </div>
 
                 <br>

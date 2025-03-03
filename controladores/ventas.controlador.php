@@ -42,26 +42,35 @@ class ControladorVentas{
 					  title: "La venta no se ha ejecuta si no hay productos",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "ventas";
-
-								}
-							})
+					  });
 
 				</script>';
 
 				return;
 			}
 
+			// Validar que el pago en efectivo no sea menor al total de la venta
+			if ($_POST["nuevoMetodoPago"] == "Efectivo" && isset($_POST["nuevoValorEfectivo"]) && floatval($_POST["nuevoValorEfectivo"]) < floatval($_POST["totalVenta"])) {
+				echo '<script>
+				  swal({
+					type: "error",
+					title: "El valor del pago en efectivo no puede ser menor al total de la venta",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+				  });
+				</script>';
+				return;
+			  }
+
 			$listaProductos = json_decode($_POST["listaProductos"], true);
 
 			$totalProductosComprados = array();
+			$totalNeto = 0;
 
 			foreach ($listaProductos as $key => $value) {
 
 				array_push($totalProductosComprados, $value["cantidad"]);
+				$totalNeto += $value["total"];
 
 				$tablaProductos = "productos";
 
@@ -123,8 +132,7 @@ class ControladorVentas{
 				"id_cliente" => $_POST["seleccionarCliente"],
 				"codigo" => $nuevoCodigo,
 				"productos" => $_POST["listaProductos"],
-				"impuesto" => $_POST["nuevoPrecioImpuesto"],
-				"neto" => $_POST["nuevoPrecioNeto"],
+				"neto" => $totalNeto,
 				"total" => $_POST["totalVenta"],
 				"metodo_pago" => $_POST["listaMetodoPago"]
 			);
@@ -185,9 +193,7 @@ class ControladorVentas{
 
 					$printer->feed(1); //Alimentamos el papel 1 vez*/
 
-					$printer->text("NETO: $ " . number_format($_POST["nuevoPrecioNeto"], 2) . "\n"); //ahora va el neto
-
-					$printer->text("IMPUESTO: $ " . number_format($_POST["nuevoPrecioImpuesto"], 2) . "\n"); //ahora va el impuesto
+					$printer->text("NETO: $ " . number_format($totalNeto, 2) . "\n"); //ahora va el neto
 
 					$printer->text("--------\n");
 
@@ -373,7 +379,6 @@ class ControladorVentas{
 						   "id_cliente"=>$_POST["seleccionarCliente"],
 						   "codigo"=>$_POST["editarVenta"],
 						   "productos"=>$listaProductos,
-						   "impuesto"=>$_POST["nuevoPrecioImpuesto"],
 						   "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalVenta"],
 						   "metodo_pago"=>$_POST["listaMetodoPago"]);
@@ -627,7 +632,6 @@ class ControladorVentas{
 					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
-					<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>NETO</td>		
 					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>		
 					<td style='font-weight:bold; border:1px solid #eee;'>METODO DE PAGO</td	
@@ -661,7 +665,6 @@ class ControladorVentas{
 		 		}
 
 		 		echo utf8_decode("</td>
-					<td style='border:1px solid #eee;'>$ ".number_format($item["impuesto"],2)."</td>
 					<td style='border:1px solid #eee;'>$ ".number_format($item["neto"],2)."</td>	
 					<td style='border:1px solid #eee;'>$ ".number_format($item["total"],2)."</td>
 					<td style='border:1px solid #eee;'>".$item["metodo_pago"]."</td>
