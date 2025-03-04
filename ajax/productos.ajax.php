@@ -45,6 +45,11 @@ class AjaxProductos{
       $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor,
         $orden);
 
+      // Eliminar el campo de precio de venta de la respuesta
+      foreach ($respuesta as &$producto) {
+        unset($producto["precio_venta"]);
+      }
+
       echo json_encode($respuesta);
 
 
@@ -57,6 +62,11 @@ class AjaxProductos{
       $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor,
         $orden);
 
+      // Eliminar el campo de precio de venta de la respuesta
+      foreach ($respuesta as &$producto) {
+        unset($producto["precio_venta"]);
+      }
+
       echo json_encode($respuesta);
 
     }else{
@@ -67,6 +77,9 @@ class AjaxProductos{
 
       $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor,
         $orden);
+
+      // Eliminar el campo de precio de venta de la respuesta
+      unset($respuesta["precio_venta"]);
 
       echo json_encode($respuesta);
 

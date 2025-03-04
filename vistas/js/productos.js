@@ -92,21 +92,7 @@ AGREGANDO PRECIO DE VENTA
 =============================================*/
 $("#nuevoPrecioCompra, #editarPrecioCompra").change(function(){
 
-	if($(".porcentaje").prop("checked")){
-
-		var valorPorcentaje = $(".nuevoPorcentaje").val();
-		
-		var porcentaje = Number(($("#nuevoPrecioCompra").val()*valorPorcentaje/100))+Number($("#nuevoPrecioCompra").val());
-
-		var editarPorcentaje = Number(($("#editarPrecioCompra").val()*valorPorcentaje/100))+Number($("#editarPrecioCompra").val());
-
-		$("#nuevoPrecioVenta").val(porcentaje);
-		$("#nuevoPrecioVenta").prop("readonly",true);
-
-		$("#editarPrecioVenta").val(editarPorcentaje);
-		$("#editarPrecioVenta").prop("readonly",true);
-
-	}
+  // Eliminar el cálculo del precio de venta
 
 })
 
@@ -115,21 +101,7 @@ CAMBIO DE PORCENTAJE
 =============================================*/
 $(".nuevoPorcentaje").change(function(){
 
-	if($(".porcentaje").prop("checked")){
-
-		var valorPorcentaje = $(this).val();
-		
-		var porcentaje = Number(($("#nuevoPrecioCompra").val()*valorPorcentaje/100))+Number($("#nuevoPrecioCompra").val());
-
-		var editarPorcentaje = Number(($("#editarPrecioCompra").val()*valorPorcentaje/100))+Number($("#editarPrecioCompra").val());
-
-		$("#nuevoPrecioVenta").val(porcentaje);
-		$("#nuevoPrecioVenta").prop("readonly",true);
-
-		$("#editarPrecioVenta").val(editarPorcentaje);
-		$("#editarPrecioVenta").prop("readonly",true);
-
-	}
+  // Eliminar el cálculo del precio de venta
 
 })
 
@@ -295,4 +267,4 @@ $(".tablaProductos tbody").on("click", "button.btnEliminarProducto", function(){
 	})
 
 })
-	
+

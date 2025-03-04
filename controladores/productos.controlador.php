@@ -22,12 +22,12 @@ class ControladorProductos{
 
 	static public function ctrCrearProducto(){
 
-		if(isset($_POST["nuevaDescripcion"])){
+		if(isset($_POST["nuevoCodigo"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .+\-]+$/', $_POST["nuevaDescripcion"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) &&	
-			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioCompra"]) &&
-			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioVenta"])){
+			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoCodigo"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
+			   preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) &&
+			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioCompra"])){
 
 		   		/*=============================================
 				VALIDAR IMAGEN
@@ -105,7 +105,6 @@ class ControladorProductos{
 							   "descripcion" => $_POST["nuevaDescripcion"],
 							   "stock" => $_POST["nuevoStock"],
 							   "precio_compra" => $_POST["nuevoPrecioCompra"],
-							   "precio_venta" => $_POST["nuevoPrecioVenta"],
 							   "imagen" => $ruta);
 
 				$respuesta = ModeloProductos::mdlIngresarProducto($tabla, $datos);
@@ -165,8 +164,7 @@ class ControladorProductos{
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .+\-]+$/', $_POST["editarDescripcion"]) &&
 			   preg_match('/^[0-9]+$/', $_POST["editarStock"]) &&	
-			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioCompra"]) &&
-			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioVenta"])){
+			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioCompra"])){
 
 		   		/*=============================================
 				VALIDAR IMAGEN
@@ -254,7 +252,6 @@ class ControladorProductos{
 							   "descripcion" => $_POST["editarDescripcion"],
 							   "stock" => $_POST["editarStock"],
 							   "precio_compra" => $_POST["editarPrecioCompra"],
-							   "precio_venta" => $_POST["editarPrecioVenta"],
 							   "imagen" => $ruta);
 
 				$respuesta = ModeloProductos::mdlEditarProducto($tabla, $datos);
