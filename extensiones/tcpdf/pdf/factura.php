@@ -110,12 +110,9 @@ EOF;
 
         // BLOQUE 4: DETALLES DE PRODUCTOS
         foreach ($productos as $key => $item) {
-            $itemProducto = "descripcion";
-            $valorProducto = $item["descripcion"];
-            $orden = null;
-            $respuestaProducto = ControladorProductos::ctrMostrarProductos($itemProducto, $valorProducto, $orden);
-            $valorUnitario = number_format($respuestaProducto["precio_venta"], 2);
             $precioTotal = number_format($item["total"], 2);
+            $cantidad = $item["cantidad"];
+            $valorUnitario = $cantidad > 0 ? number_format($item["total"] / $cantidad, 2) : '0.00';
 
             $bloque4 = <<<EOF
             <table style="font-size:10px; padding:5px 10px;">
@@ -153,15 +150,6 @@ EOF;
                 </td>
                 <td style="border: 1px solid #666; color:#333; background-color:white; width:100px; text-align:center">
                     $ $neto
-                </td>
-            </tr>
-            <tr>
-                <td style="border-right: 1px solid #666; color:#333; background-color:white; width:340px; text-align:center"></td>
-                <td style="border: 1px solid #666; background-color:#f2f2f2; width:100px; text-align:center">
-                    <strong>Impuesto:</strong>
-                </td>
-                <td style="border: 1px solid #666; color:#333; background-color:white; width:100px; text-align:center">
-                    $ $impuesto
                 </td>
             </tr>
             <tr>
