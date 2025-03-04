@@ -1,5 +1,7 @@
 <?php
 
+require_once "categorias.controlador.php";
+
 class ControladorProductos{
 
 	/*=============================================
@@ -385,21 +387,10 @@ class ControladorProductos{
 
 			// Datos
 			foreach ($productos as $producto) {
-				$categoria = "";
-				switch ($producto["id_categoria"]) {
-					case 1:
-						$categoria = "Local";
-						break;
-					case 2:
-						$categoria = "Bodega 1";
-						break;
-					case 3:
-						$categoria = "Bodega 2";
-						break;
-				}
+				$categoria = ControladorCategorias::ctrMostrarCategorias("id", $producto["id_categoria"]);
 				$pdf->Cell(40, 10, $producto["codigo"]);
 				$pdf->Cell(60, 10, $producto["descripcion"]);
-				$pdf->Cell(40, 10, $categoria);
+				$pdf->Cell(40, 10, $categoria["categoria"]);
 				$pdf->Cell(20, 10, $producto["stock"]);
 				$pdf->Ln();
 			}
@@ -413,19 +404,8 @@ class ControladorProductos{
 			echo "Codigo\tDescripcion\tCategoria\tStock\n";
 
 			foreach ($productos as $producto) {
-				$categoria = "";
-				switch ($producto["id_categoria"]) {
-					case 1:
-						$categoria = "Local";
-						break;
-					case 2:
-						$categoria = "Bodega 1";
-						break;
-					case 3:
-						$categoria = "Bodega 2";
-						break;
-				}
-				echo $producto["codigo"] . "\t" . $producto["descripcion"] . "\t" . $categoria . "\t" . $producto["stock"] . "\n";
+				$categoria = ControladorCategorias::ctrMostrarCategorias("id", $producto["id_categoria"]);
+				echo $producto["codigo"] . "\t" . $producto["descripcion"] . "\t" . $categoria["categoria"] . "\t" . $producto["stock"] . "\n";
 			}
 		}
 	}
