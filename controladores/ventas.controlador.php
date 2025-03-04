@@ -17,6 +17,15 @@ class ControladorVentas{
 
 		$respuesta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
 
+		if ($respuesta !== false) {
+			// Acceder a los índices del array solo si $respuesta no es false
+			$codigo = $respuesta['codigo'];
+			// ...existing code...
+		} else {
+			// Manejar el caso cuando no hay resultados
+			echo "No se encontraron resultados.";
+		}
+
 		return $respuesta;
 
 	}
@@ -234,6 +243,15 @@ class ControladorVentas{
 
 			$traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
 
+			if ($traerVenta !== false) {
+				 // No acceder a los índices del array
+				 $listaProductos = $traerVenta["productos"];
+			} else {
+				// Manejar el caso cuando no hay resultados
+				echo "No se encontraron resultados.";
+				return;
+			}
+
 			/*=============================================
 			REVISAR SI VIENE PRODUCTOS EDITADOS
 			=============================================*/
@@ -268,16 +286,22 @@ class ControladorVentas{
 
 					$traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor, $orden);
 
-					$item1a = "ventas";
-					$valor1a = $traerProducto["ventas"] - $value["cantidad"];
-
-					$nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
-
-					$item1b = "stock";
-					$valor1b = $value["cantidad"] + $traerProducto["stock"];
-
-					$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
-
+					if ($traerProducto !== false) {
+						// No acceder a los índices del array
+						$item1a = "ventas";
+						$valor1a = $traerProducto["ventas"] - $value["cantidad"];
+	
+						$nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
+	
+						$item1b = "stock";
+						$valor1b = $value["cantidad"] + $traerProducto["stock"];
+	
+						$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
+					} else {
+						// Manejar el caso cuando no hay resultados
+						echo "No se encontraron resultados para el producto.";
+						return;
+					}
 				}
 
 				$tablaClientes = "clientes";
