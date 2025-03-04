@@ -24,8 +24,8 @@ class ControladorProductos{
 
 		if(isset($_POST["nuevoCodigo"])){
 
-			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoCodigo"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .+\-]+$/', $_POST["nuevoCodigo"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .+\-]+$/', $_POST["nuevaDescripcion"]) &&
 			   preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) &&
 			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioCompra"])){
 
