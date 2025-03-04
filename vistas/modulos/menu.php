@@ -35,14 +35,6 @@
 			</li>';
 			}
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
-				echo '<li class="' . ($current_page == "clientes" ? "active" : "") . '">
-                <a href="clientes">
-				<i class="fa fa-users"></i>
-				<span>Clientes</span>
-                </a>
-			</li>';
-			}
 
 			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
 				echo '<li class="treeview ' . ($current_page == "ventas" || $current_page == "crear-venta" || $current_page == "reportes" ? "active" : "") . '">
