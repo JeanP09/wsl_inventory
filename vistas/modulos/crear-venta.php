@@ -128,9 +128,7 @@ if($_SESSION["perfil"] == "Especial"){
                 ======================================--> 
 
                 <div class="form-group row nuevoProducto">
-
-                
-
+                  <!-- Aquí se llenarán los productos agregados -->
                 </div>
 
                 <input type="hidden" id="listaProductos" name="listaProductos">
