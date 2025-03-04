@@ -234,7 +234,7 @@ class ControladorVentas{
 		if(isset($_POST["editarVenta"])){
 
 			/*=============================================
-			FORMATEAR TABLA DE PRODUCTOS Y LA DE CLIENTES
+			FORMATEAR TABLA DE PRODUCTOS
 			=============================================*/
 			$tabla = "ventas";
 
@@ -260,7 +260,6 @@ class ControladorVentas{
 
 				$listaProductos = $traerVenta["productos"];
 				$cambioProducto = false;
-
 
 			}else{
 
@@ -304,18 +303,6 @@ class ControladorVentas{
 					}
 				}
 
-				$tablaClientes = "clientes";
-
-				$itemCliente = "id";
-				$valorCliente = $_POST["seleccionarCliente"];
-
-				$traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $itemCliente, $valorCliente);
-
-				$item1a = "compras";
-				$valor1a = $traerCliente["compras"] - array_sum($totalProductosComprados);		
-
-				$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valorCliente);
-
 				/*=============================================
 				ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
 				=============================================*/
@@ -348,29 +335,6 @@ class ControladorVentas{
 
 				}
 
-				$tablaClientes_2 = "clientes";
-
-				$item_2 = "id";
-				$valor_2 = $_POST["seleccionarCliente"];
-
-				$traerCliente_2 = ModeloClientes::mdlMostrarClientes($tablaClientes_2, $item_2, $valor_2);
-
-				$item1a_2 = "compras";
-
-				$valor1a_2 = array_sum($totalProductosComprados_2) + $traerCliente_2["compras"];
-
-				$comprasCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1a_2, $valor1a_2, $valor_2);
-
-				$item1b_2 = "ultima_compra";
-
-				date_default_timezone_set('America/Bogota');
-
-				$fecha = date('Y-m-d');
-				$hora = date('H:i:s');
-				$valor1b_2 = $fecha.' '.$hora;
-
-				$fechaCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1b_2, $valor1b_2, $valor_2);
-
 			}
 
 			/*=============================================
@@ -378,12 +342,12 @@ class ControladorVentas{
 			=============================================*/	
 
 			$datos = array("id_vendedor"=>$_POST["idVendedor"],
-						   "id_cliente"=>$_POST["seleccionarCliente"],
 						   "codigo"=>$_POST["editarVenta"],
 						   "productos"=>$listaProductos,
 						   "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalVenta"],
 						   "metodo_pago"=>$_POST["listaMetodoPago"],
+						   "cliente_descripcion"=>$_POST["clienteDescripcion"],
 						   "precio_venta"=>$_POST["nuevoPrecioProducto"]);
 
 
@@ -416,7 +380,6 @@ class ControladorVentas{
 
 	}
 
-
 	/*=============================================
 	ELIMINAR VENTA
 	=============================================*/
@@ -434,7 +397,7 @@ class ControladorVentas{
 
 			/*=============================================
 			ACTUALIZAR FECHA ÚLTIMA COMPRA
-			=============================================*/
+		=============================================*/
 
 			$tablaClientes = "clientes";
 
