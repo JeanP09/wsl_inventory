@@ -1,6 +1,6 @@
 <?php
 
-require_once "modelos/categorias.modelo.php";
+
 
 class ControladorCategorias{
 
@@ -206,3 +206,4 @@ class ControladorCategorias{
 		
 	}
 }
+?>
