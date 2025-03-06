@@ -9,11 +9,13 @@ require_once "../../../modelos/usuarios.modelo.php";
 require_once "../../../controladores/productos.controlador.php";
 require_once "../../../modelos/productos.modelo.php";
 
-class imprimirFactura {
+class imprimirFactura
+{
 
     public $codigo;
 
-    public function traerImpresionFactura() {
+    public function traerImpresionFactura()
+    {
         // TRAEMOS LA INFORMACIÓN DE LA VENTA
         $itemVenta = "codigo";
         $valorVenta = $this->codigo;
@@ -47,23 +49,32 @@ class imprimirFactura {
         <table>
             <tr>
                 <td style="width:150px"><img src="images/logo-negro-bloque.png"></td>
-                <td style="background-color:white; width:140px">
+                <td style="background-color:white; width:140px; ">
                     <div style="font-size:8.5px; text-align:right; line-height:15px;">
                         <br>
                         <strong>NIT:</strong> 123456789
+
                         <br>
-                        <strong>Dirección:</strong> Calle Falsa 123
+                        <strong>Dirección:</strong> Cra. 38 No. 8A - 08 Local 3
+
                     </div>
+
                 </td>
+
                 <td style="background-color:white; width:140px">
+
                     <div style="font-size:8.5px; text-align:right; line-height:15px;">
+
                         <br>
-                        <strong>Teléfono:</strong> (123) 456-7890
+                        <strong>Teléfono:</strong> 3124358219
+                        
                         <br>
-                        <strong>Correo:</strong> info@empresa.com
+                        (601) 599 7395
+                        <br>
+                        <strong>Correo:</strong> wilmerme1702@hotmail.com
                     </div>
                 </td>
-                <td style="background-color:white; width:110px; text-align:center; color:red"><br><br><strong>FACTURA N.</strong><br>$valorVenta</td>
+                <br><td style="background-color:white; width:110px; text-align:right; color:red"><br><br><strong>FACTURA N.</strong> $valorVenta</td><br>
             </tr>
         </table>
 EOF;
@@ -100,7 +111,7 @@ EOF;
         <table style="font-size:10px; padding:5px 10px;">
             <tr>
                 <td style="border: 1px solid #666; background-color:#f2f2f2; width:260px; text-align:center"><strong>Producto</strong></td>
-                <td style="border: 1px solid #666; background-color:#f2f2f2; width:80px; text-align:center"><strong>Cantidad</strong></td>
+                <td style="border: 1px solid #666; background-color:#f2f2f2; width:100px; text-align:center"><strong>Cantidad</strong></td>
                 <td style="border: 1px solid #666; background-color:#f2f2f2; width:100px; text-align:center"><strong>Valor Unit.</strong></td>
                 <td style="border: 1px solid #666; background-color:#f2f2f2; width:100px; text-align:center"><strong>Valor Total</strong></td>
             </tr>
@@ -173,5 +184,3 @@ EOF;
 $factura = new imprimirFactura();
 $factura->codigo = $_GET["codigo"];
 $factura->traerImpresionFactura();
-
-?>

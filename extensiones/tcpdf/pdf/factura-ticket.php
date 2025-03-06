@@ -71,16 +71,16 @@ $bloque1 = <<<EOF
 				Fecha: $fecha
 
 				<br><br>
-				Inventory System
+				Distribuciones WSL
 				
 				<br>
 				NIT: 71.759.963-9
 
 				<br>
-				Dirección: Calle 44B 92-11
+				Dirección: Cra. 38 No. 8a -08 Local 3
 
 				<br>
-				Teléfono: 300 786 52 49
+				Teléfono: 312 435 8219
 
 				<br>
 				FACTURA N.$valorVenta

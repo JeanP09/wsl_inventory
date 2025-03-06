@@ -5,11 +5,11 @@ Password: admin123
 
 
 
-Funcionoes usuarios
+Funciones usuarios
 
 Administrador
 +Todas las opciones de menu
-    +Todas las Funcionoes
+    +Todas las Funciones
 
 Especial
 +Solo tiene acceso a categorias y  productos

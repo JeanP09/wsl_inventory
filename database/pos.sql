@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 04-03-2025 a las 20:35:33
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.1.25
+-- Host: 127.0.0.1
+-- Generation Time: Mar 06, 2025 at 03:16 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pos`
+-- Database: `pos`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Table structure for table `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -34,7 +34,7 @@ CREATE TABLE `categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `categorias`
+-- Dumping data for table `categorias`
 --
 
 INSERT INTO `categorias` (`id`, `categoria`, `fecha`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `categorias` (`id`, `categoria`, `fecha`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clientes`
+-- Table structure for table `clientes`
 --
 
 CREATE TABLE `clientes` (
@@ -64,7 +64,7 @@ CREATE TABLE `clientes` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `productos`
+-- Table structure for table `productos`
 --
 
 CREATE TABLE `productos` (
@@ -80,10 +80,21 @@ CREATE TABLE `productos` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Dumping data for table `productos`
+--
+
+INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`, `stock`, `precio_compra`, `precio_venta`, `ventas`, `fecha`) VALUES
+(82, 1, 'BGA.2024-4+', 'Bocina Gatos AUX G-20.20+', 'vistas/img/productos/default/anonymous.png', 0, 40000, 0, 25, '2025-03-04 21:43:56'),
+(83, 1, 'BGA.2024-4+', 'Bocina Gatos AUX G-20.20+', 'vistas/img/productos/default/anonymous.png', 25, 40000, 0, 0, '2025-03-04 20:39:37'),
+(84, 1, 'BGA.2024-4+', 'Bocina Gatos AUX G-20.20+', 'vistas/img/productos/default/anonymous.png', 25, 40000, 0, 0, '2025-03-04 20:39:37'),
+(85, 1, 'BDFBFD23E243', 'SDVA DF343', 'vistas/img/productos/default/anonymous.png', 333, 3333330, 0, 0, '2025-03-04 20:39:59'),
+(86, 2, 'BGA.2024-4+', 'Bocina para Gatos G-20.20+', 'vistas/img/productos/default/anonymous.png', 2655, 262525, 0, 0, '2025-03-05 21:46:22');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -99,16 +110,16 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`) VALUES
-(66, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5aunxs9bkpyGmGE/.vekdjFg83yRec789S', 'Administrador', 'vistas/img/usuarios/admin/126.jpg', 1, '2025-02-28 15:31:37', '2025-02-28 20:31:37');
+(66, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5aunxs9bkpyGmGE/.vekdjFg83yRec789S', 'Administrador', 'vistas/img/usuarios/admin/126.jpg', 1, '2025-03-05 16:45:49', '2025-03-05 21:45:49');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ventas`
+-- Table structure for table `ventas`
 --
 
 CREATE TABLE `ventas` (
@@ -127,67 +138,79 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Índices para tablas volcadas
+-- Dumping data for table `ventas`
+--
+
+INSERT INTO `ventas` (`id`, `codigo`, `id_cliente`, `id_vendedor`, `productos`, `impuesto`, `neto`, `total`, `precio_venta`, `metodo_pago`, `fecha`, `clienTe_descripcion`) VALUES
+(70, 1, 0, 66, '[{\"id\":\"82\",\"descripcion\":\"Bocina Gatos AUX G-20.20+\",\"cantidad\":\"25\",\"stock\":\"0\",\"precio\":\"80000\",\"total\":2000000}]', 0, 2000000, 2000000, 80.00, 'Efectivo', '2025-03-04 21:43:56', '');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `categorias`
+-- Indexes for table `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `clientes`
+-- Indexes for table `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `productos`
+-- Indexes for table `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `ventas`
+-- Indexes for table `ventas`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- AUTO_INCREMENT for table `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
+--
+-- AUTO_INCREMENT for table `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT de la tabla `productos`
+-- AUTO_INCREMENT for table `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
--- AUTO_INCREMENT de la tabla `ventas`
+-- AUTO_INCREMENT for table `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
