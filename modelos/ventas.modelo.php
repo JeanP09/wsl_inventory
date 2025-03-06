@@ -78,7 +78,7 @@ class ModeloVentas{
 
 	static public function mdlEditarVenta($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_vendedor = :id_vendedor, productos = :productos, neto = :neto, total= :total, metodo_pago = :metodo_pago, cliente_descripcion = :cliente_descripcion, precio_venta = :precio_venta WHERE codigo = :codigo");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET id_vendedor = :id_vendedor, productos = :productos, neto = :neto, total = :total, metodo_pago = :metodo_pago, clienTe_descripcion = :clienTe_descripcion, precio_venta = :precio_venta WHERE codigo = :codigo");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
@@ -86,7 +86,7 @@ class ModeloVentas{
 		$stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		$stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
-		$stmt->bindParam(":cliente_descripcion", $datos["cliente_descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":clienTe_descripcion", $datos["clienTe_descripcion"], PDO::PARAM_STR);
 		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
 
 		if($stmt->execute()){

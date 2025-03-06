@@ -347,7 +347,7 @@ class ControladorVentas{
 						   "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalVenta"],
 						   "metodo_pago"=>$_POST["listaMetodoPago"],
-						   "cliente_descripcion"=>$_POST["clienteDescripcion"],
+						   "clienTe_descripcion"=>$_POST["editarClienteDescripcion"], // Asegúrate de que este campo esté presente
 						   "precio_venta"=>$_POST["nuevoPrecioProducto"]);
 
 
