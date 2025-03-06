@@ -314,6 +314,7 @@
                   <th>Imagen</th>
                   <th>Código</th>
                   <th>Descripcion</th>
+                  <th>Precio Compra</th>
                   <th>Stock</th>
                   <th>Acciones</th>
                 </tr>
